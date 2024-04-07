@@ -1,3 +1,4 @@
+from queue import LifoQueue, Queue
 from typing import TypeVar, Generic
 
 __all__ = ("Node", "Graph")
@@ -32,7 +33,25 @@ class Graph:
         self._root = root
 
     def dfs(self) -> list[Node]:
-        raise NotImplementedError
+        stack = LifoQueue()
+        stack.put(self._root)
+        lst = []
+        while not stack.empty():
+            a = stack.get()
+            if a not in lst:
+                lst.append(a)
+                for i in reversed(a.outbound):
+                    stack.put(i)
+        return lst
 
     def bfs(self) -> list[Node]:
-        raise NotImplementedError
+        queue = Queue()
+        queue.put(self._root)
+        lst = []
+        while not queue.empty():
+            a = queue.get()
+            if a not in lst:
+                lst.append(a)
+                for i in a.outbound:
+                    queue.put(i)
+        return lst
