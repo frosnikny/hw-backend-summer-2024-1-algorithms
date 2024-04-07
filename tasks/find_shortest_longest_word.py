@@ -17,6 +17,8 @@ def find_shortest_longest_word(text: str) -> tuple[str, str] | tuple[None, None]
         (None, None)
     """
     r = re.findall(r"\S+", text)
+    if len(r) == 0:
+        return None, None
     min_word = min(r, key=lambda i: len(i))
     max_word = max(r, key=lambda i: len(i))
     return min_word, max_word
